@@ -1,0 +1,6 @@
+<ivy-module version="2.0">
+    <info organisation="org.jmorla" module="dependencies" />
+    <dependencies>
+        <dependency org="org.openpnp" name="opencv" rev="4.5.4-0" />
+    </dependencies>
+</ivy-module>

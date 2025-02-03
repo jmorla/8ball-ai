@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="8ball" default="run" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant">
+
+    <property name="src.dir" value="src" /> <!-- Source directory-->
+    <property name="build.dir" value="build" /> <!-- Build directory-->
+    <property name="lib.dir" value="lib" /> <!-- Library directory-->
+
+    <target name="init">
+        <mkdir dir="${build.dir}" />
+    </target>
+
+    <target name="resolve">
+        <ivy:retrieve />
+    </target>
+
+    <target name="build" depends="init,resolve">
+        <path id="classpath">
+            <fileset dir="${lib.dir}" includes="*.jar" />
+        </path>
+
+        <javac srcdir="${src.dir}" destdir="${build.dir}" classpathref="classpath"
+            includeantruntime="false" />
+    </target>
+
+    <target name="run" depends="build">
+        <java classname="org.jmorla.App"
+            classpath="${build.dir}/:${lib.dir}/*"
+            fork="true"/>
+    </target>
+
+</project>
