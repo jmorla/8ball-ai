@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="8ball" default="run" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant">
 
-    <property name="src.dir" value="src" /> <!-- Source directory-->
+    <property name="src.dir" value="src/main/java" /> <!-- Source directory-->
     <property name="build.dir" value="build" /> <!-- Build directory-->
     <property name="lib.dir" value="lib" /> <!-- Library directory-->
+    <property name="resources.dir" value="src/main/resources" /> <!-- Resources directory-->
 
     <target name="init">
         <mkdir dir="${build.dir}" />
@@ -13,7 +14,17 @@
         <ivy:retrieve />
     </target>
 
-    <target name="build" depends="init,resolve">
+    <target name="clean">
+        <delete dir="${build.dir}" />
+    </target>
+
+    <target name="copy-resources" depends="init">
+        <copy todir="${build.dir}">
+            <fileset dir="${resources.dir}" />
+        </copy>
+    </target>
+
+    <target name="build" depends="init,resolve,copy-resources">
         <path id="classpath">
             <fileset dir="${lib.dir}" includes="*.jar" />
         </path>
