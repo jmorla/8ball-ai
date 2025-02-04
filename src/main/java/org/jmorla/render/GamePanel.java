@@ -10,7 +10,8 @@ import javax.swing.JPanel;
 public class GamePanel extends JPanel implements Runnable {
     
     private final Thread thread;
-    private Player player;
+    private PoolBoard map;
+    private Ball ball;
 
     public GamePanel() {
         this.setBackground(Color.BLACK);
@@ -18,7 +19,10 @@ public class GamePanel extends JPanel implements Runnable {
         this.setDoubleBuffered(true);
 
         this.thread = new Thread(this);
-        player = new Player();
+        map = new PoolBoard();
+        ball = new Ball(10);
+
+
     }
 
     public void start() {
@@ -38,7 +42,6 @@ public class GamePanel extends JPanel implements Runnable {
             lastTime = currentTime;
 
             if (delta >= 1) {
-                System.out.println("Hello world");
                 update();
                 repaint();
                 delta--;
@@ -47,14 +50,16 @@ public class GamePanel extends JPanel implements Runnable {
     }
     
     private void update() {
-        player.update();
+        map.update();
+        ball.update();
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         var g2 = (Graphics2D) g;
-        player.render(g2);
+        map.render(g2);
+        ball.render(g2);
         g2.dispose();
     }
     
